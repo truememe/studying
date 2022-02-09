@@ -50,6 +50,7 @@ class Game extends React.Component {
             history: [{
                 squares: Array(9).fill(null),
             }],
+            clickedI: Array(9).fill(null),
             xIsNext: true,
             stepNumber: 0,
         }
@@ -59,16 +60,19 @@ class Game extends React.Component {
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
         const current = history[history.length - 1];
         const squares = current.squares.slice();
+        const clicked = this.state.clickedI.slice();
         if (calculateWinner(squares) || squares[i]) {
           return;
         }
         squares[i] = this.state.xIsNext ? 'X' : 'O';
+        clicked[history.length] = i;
         this.setState({
           history: history.concat([{
             squares: squares
           }]),
           xIsNext: !this.state.xIsNext,
           stepNumber: history.length,
+          clickedI: clicked,
         });
     }
 
@@ -83,11 +87,16 @@ class Game extends React.Component {
         const history = this.state.history;
         const current = history[this.state.stepNumber];
         const winner = calculateWinner(current.squares);
-
+        const clickedHistory = this.state.clickedI;
+        const stepNumber = this.state.stepNumber;
         const moves = history.map((step, move) => {
-            const desc = move ? 
-                'Go to move #' + move :
+            const coords = idToRowCols(clickedHistory[move]);
+            var desc = move ? 
+                'Go to move #' + move + ', row: ' + coords[0] + ', col: ' + coords[1] :
                 'Go to game start';
+            if (move === stepNumber) {
+                desc = '<b>' + desc + '</b>';
+            }
             return (
                 <li key={move}>
                     <button onClick={() => this.jumpTo(move)}>{desc}</button>
@@ -145,4 +154,10 @@ function calculateWinner(squares) {
         }
     }
     return null;
+}
+
+function idToRowCols(id) {
+    const row = Math.floor(id/ 3) + 1;
+    const col = id % 3 + 1;
+    return [row, col];
 }
