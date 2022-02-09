@@ -23,6 +23,7 @@ class Board extends React.Component {
     render() {
         return (
         <div>
+            
             <div className="board-row">
             {this.renderSquare(0)}
             {this.renderSquare(1)}
@@ -91,15 +92,15 @@ class Game extends React.Component {
         const stepNumber = this.state.stepNumber;
         const moves = history.map((step, move) => {
             const coords = idToRowCols(clickedHistory[move]);
-            var desc = move ? 
+            const desc = move ? 
                 'Go to move #' + move + ', row: ' + coords[0] + ', col: ' + coords[1] :
                 'Go to game start';
-            if (move === stepNumber) {
-                desc = '<b>' + desc + '</b>';
-            }
+            const result = stepNumber === move;
             return (
                 <li key={move}>
-                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                    <button onClick={() => this.jumpTo(move)}> 
+                        { result ? <b> {desc} </b> : <div>{desc}</div> }
+                    </button>
                 </li>
             );
         });
