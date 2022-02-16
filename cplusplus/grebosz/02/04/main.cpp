@@ -8,7 +8,7 @@ int main() {
 
     int i;
     for(i=1; i<= value; i++) {
-        cout << "Seat your belts " << i << "!\n";
+        cout << "Fasten your seatbelts " << i << "!\n";
     }
     cout << "Landing...";
 }
