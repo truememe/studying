@@ -9,9 +9,9 @@
         ""
       ],
       "stopAtEntry": false,
-      "cwd": "/home/galazkamilosz/projects/studying/cplusplus/grebosz/07",
+      "cwd": "/home/galazkamilosz/projects/studying/cplusplus/grebosz/08/05",
       "environment": [],
-      "program": "/home/galazkamilosz/projects/studying/cplusplus/grebosz/07/build/Debug/outDebug",
+      "program": "/home/galazkamilosz/projects/studying/cplusplus/grebosz/08/05/build/Debug/outDebug",
       "internalConsoleOptions": "openOnSessionStart",
       "MIMode": "gdb",
       "miDebuggerPath": "/usr/bin/gdb",
