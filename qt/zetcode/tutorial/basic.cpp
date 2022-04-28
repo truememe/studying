@@ -3,6 +3,7 @@
 #include <QTime>
 #include <QVector>
 #include <QList>
+#include <QFileInfo>
 
 int main(void) {
     QTextStream out(stdout);
@@ -67,5 +68,19 @@ int main(void) {
     {
         out << author << endl;
     }
+
+
+    QString filename = "/home/mgalazka/studying/qt/zetcode/test.txt";
+    QFile f{filename};
+
+    if (!f.exists())
+    {
+        qWarning("no kij mi w oczko");
+    }
+
+
+
     return 0;
+
+
 }
