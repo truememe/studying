@@ -4,6 +4,7 @@
 #include <QVector>
 #include <QList>
 #include <QFileInfo>
+#include <QFile>
 
 int main(void) {
     QTextStream out(stdout);
@@ -70,16 +71,70 @@ int main(void) {
     }
 
 
-    QString filename = "/home/mgalazka/studying/qt/zetcode/test.txt";
+    QString filename = "/home/galazkamilosz/projects/studying/qt/zetcode/tutorial/test.txt";
     QFile f{filename};
 
     if (!f.exists())
     {
         qWarning("no kij mi w oczko");
+        return 1;
     }
 
+    QFileInfo fileinfo{filename};
+    qint64 size = fileinfo.size();
+    QString group = fileinfo.group();
+    QString owner = fileinfo.owner();
+    QDateTime last_read = fileinfo.lastRead();
+    QDateTime last_mod = fileinfo.lastModified();
+    QString absPath = fileinfo.absoluteFilePath();
+    QString baseName = fileinfo.baseName();
+    QString compBaseName = fileinfo.completeBaseName();
+    QString fname = fileinfo.fileName();
+    QString suffix = fileinfo.suffix();
+    QString compSuffix = fileinfo.completeSuffix();
 
 
+    out << group << endl;
+    out << owner << endl;
+    out << "read: " << last_read.toString() << ", mod: " << last_mod.toString() << endl;
+    out << "absPath: " << absPath << endl;
+    out << "baseName: " << baseName << endl;
+    out << "compBaseName: " << compBaseName << endl;
+    out << "filename: " << fname << endl;
+    out << "suffix: " << suffix << endl;
+    out << "compSuffix: " << compSuffix << endl;
+
+    QString str = "The size is: %1 bytes.";
+    out << str.arg(size) << endl;
+
+    if(!f.open(QIODevice::ReadOnly)) {
+        qWarning("Cannot open file for reading!");
+        return 1;
+    }
+
+    QTextStream in{&f};
+
+    while(!in.atEnd())
+    {
+        QString line = in.readLine();
+        out << line << endl;
+    }
+    f.close();
+
+    if(f.open(QIODevice::WriteOnly))
+    {
+        QTextStream outf{&f};
+        outf << "This" << endl;
+        outf << "is" << endl;
+        outf << "kinda" << endl;
+        outf << "fun" << endl;
+    }
+    else
+    {
+        qWarning("Could not open file.");
+    }
+
+    f.close();
     return 0;
 
 
